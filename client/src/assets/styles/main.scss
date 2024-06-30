@@ -1,0 +1,47 @@
+@import 'base';
+
+/* Variables */
+
+$primary: #363795;
+$secondary: #FFB200;
+
+.text-xl {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.text-2xl {
+  font-size: 40px;
+}
+
+.text-4xl {
+  font-size: 160px;
+  font-weight: bold;
+}
+
+.text-lg {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  font-weight: normal;
+  height: 100%;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
