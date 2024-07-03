@@ -1,6 +1,7 @@
 export enum ControllerMessageType {
   ALARM = 'esp32-alarm: ',
-  PH_VALUE = 'esp32-pH-value: '
+  PH_VALUE = 'esp32-pH-value: ',
+  CAPACITY_VALUE = 'esp32-capacitive-value: '
 }
 
 export const checkMessage = (message: string, type: ControllerMessageType): boolean => {
@@ -8,10 +9,10 @@ export const checkMessage = (message: string, type: ControllerMessageType): bool
 }
 
 export const formatMessage = (message: string): string => {
-  const messageValues = Object.values(ControllerMessageType)
-  for (const value of messageValues) {
-    if (checkMessage(message, value)) {
-      return message.replace(value, '')
+  const messageTypes = Object.values(ControllerMessageType)
+  for (const type of messageTypes) {
+    if (checkMessage(message, type)) {
+      return message.replace(type, '')
     }
   }
   return ''

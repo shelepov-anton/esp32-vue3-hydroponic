@@ -10,13 +10,14 @@
 import { computed } from 'vue'
 
 const props = defineProps<{
-  phValue: number
+  phValue: number,
+  capacityValue: number
 }>()
 
 const data = computed(() => [
   { title: 'Уровень pH', value: props.phValue },
   { title: 'Температура', value: '25º' },
-  { title: 'Уровень воды', value: '200 мл' }
+  { title: 'Уровень воды', value: `${props.capacityValue} мл` }
 ])
 
 </script>

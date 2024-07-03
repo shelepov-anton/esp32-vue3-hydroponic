@@ -3,7 +3,7 @@
     <AppHeader />
     <DayCounter :count="daysCount" :style="{ margin: '50px 0 20px 0' }" />
     <div>
-      <Datalist :style="{ marginBottom: '30px' }" :ph-value="phValue" />
+      <Datalist :style="{ marginBottom: '30px' }" :ph-value="phValue" :capacityValue="capacityValue" />
       <CustomButton @click="onStartClick" type="primary" :style="{marginBottom: '14px'}">
         {{ daysCount ? 'Редактировать' : 'Старт' }}
       </CustomButton>
@@ -21,9 +21,8 @@ import AppHeader from '@/components/header/AppHeader.vue'
 import DayCounter from '@/components/DayCounter.vue'
 import CustomButton from '@/components/ui/CustomButton.vue'
 import Datalist from '@/components/Datalist.vue'
-import { useModal, useModalSlot, VueFinalModal } from 'vue-final-modal'
+import { ModalsContainer, useModal, useModalSlot, VueFinalModal } from 'vue-final-modal'
 import SettingsModal from '@/components/modal/SettingsModal.vue'
-import { ModalsContainer } from 'vue-final-modal'
 import { onMounted, ref, watch } from 'vue'
 import { useConfigurationStore } from '@/store/configuration'
 import { storeToRefs } from 'pinia'
@@ -42,7 +41,7 @@ const settingsModal = useModal({
 
 // Days count
 
-const { daysCount, isNotificationHidden } = storeToRefs(useConfigurationStore())
+const { daysCount } = storeToRefs(useConfigurationStore())
 
 onMounted(() => {
   const storageDaysCount = Number(localStorage.getItem('daysCount'))
@@ -60,11 +59,15 @@ watch(daysCount, () => {
 // Controller data
 
 const phValue = ref<number>(0)
+const capacityValue = ref<number>(0)
 
 socket.onmessage = (event) => {
   const message = event.data
   if (checkMessage(message, ControllerMessageType.PH_VALUE)) {
     phValue.value = Number(formatMessage(message))
+  }
+  if (checkMessage(message, ControllerMessageType.CAPACITY_VALUE)) {
+    capacityValue.value = Number(formatMessage(message))
   }
   if (checkMessage(message, ControllerMessageType.ALARM)) {
     useConfigurationStore().showNotification(formatMessage(message))
